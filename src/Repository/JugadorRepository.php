@@ -2,25 +2,52 @@
 
 namespace App\Repository;
 
-use App\Entity\Customer;
+use App\Entity\Jugador;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * @method Customer|null find($id, $lockMode = null, $lockVersion = null)
- * @method Customer|null findOneBy(array $criteria, array $orderBy = null)
- * @method Customer[]    findAll()
- * @method Customer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Jugador|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Jugador|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Jugador[]    findAll()
+ * @method Jugador[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class JugadorRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+
+    public function __construct
+    (
+        ManagerRegistry $registry,
+        EntityManagerInterface $manager
+    )
     {
-        parent::__construct($registry, Customer::class);
+        parent::__construct($registry, Jugador::class);
+        $this->manager = $manager;
+    }
+
+    public function saveJugador($id, $gols, $assist, $xuts_porta, $xuts_fora, $perdues, $recuperacions, $intercepcions, $partits)
+    {
+        $newCustomer = new Jugador();
+
+        $newCustomer
+            ->setId($id)
+            ->setGols($gols)
+            ->setAssist($assist)
+            ->setXutsPorta($xuts_porta)
+            ->setXutsFora($xuts_fora)
+            ->setPerdues($perdues)
+            ->setRecuperacions($recuperacions)
+            ->setIntercepcions($intercepcions)
+            ->setPartits($partits);
+
+        $this->manager->persist($newCustomer);
+        $this->manager->flush();
     }
 
     // /**
-    //  * @return Customer[] Returns an array of Customer objects
+    //  * @return Jugador[] Returns an array of Jugador objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +64,7 @@ class JugadorRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Customer
+    public function findOneBySomeField($value): ?Jugador
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "48c5c116ffebd586eedffe0ed1b84476",
+    "content-hash": "587c28bc3cf5a74cccfae808869bc7de",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -141,6 +141,10 @@
                 "docblock",
                 "parser"
             ],
+            "support": {
+                "issues": "https://github.com/doctrine/annotations/issues",
+                "source": "https://github.com/doctrine/annotations/tree/1.13.2"
+            },
             "time": "2021-08-05T19:00:23+00:00"
         },
         {

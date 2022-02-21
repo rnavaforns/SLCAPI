@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Partit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 /**
  * @method Partit|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,11 +16,35 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PartitRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+
+    public function __construct
+    (
+        ManagerRegistry $registry,
+        EntityManagerInterface $manager
+    )
     {
-        parent::__construct($registry, Partit::class);
+        parent::__construct($registry, Jugador::class);
+        $this->manager = $manager;
     }
 
+    public function savePartit($gols, $assist, $xuts_porta, $xuts_fora, $perdues, $recuperacions, $intercepcions)
+    {
+        $newPartit = new Partit();
+
+        $newPartit
+            ->setGols($gols)
+            ->setAssist($assist)
+            ->setXutsPorta($xuts_porta)
+            ->setXutsFora($xuts_fora)
+            ->setPerdues($perdues)
+            ->setRecuperacions($recuperacions)
+            ->setIntercepcions($intercepcions);
+
+        $this->manager->persist($newPartit);
+        $this->manager->flush();
+    }
+    
     // /**
     //  * @return Partit[] Returns an array of Partit objects
     //  */
