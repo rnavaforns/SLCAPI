@@ -29,9 +29,9 @@ class JugadorRepository extends ServiceEntityRepository
 
     public function saveJugador($id, $gols, $assist, $xuts_porta, $xuts_fora, $perdues, $recuperacions, $intercepcions, $partits)
     {
-        $newCustomer = new Jugador();
+        $newJugador = new Jugador();
 
-        $newCustomer
+        $newJugador
             ->setId($id)
             ->setGols($gols)
             ->setAssist($assist)
@@ -42,7 +42,7 @@ class JugadorRepository extends ServiceEntityRepository
             ->setIntercepcions($intercepcions)
             ->setPartits($partits);
 
-        $this->manager->persist($newCustomer);
+        $this->manager->persist($newJugador);
         $this->manager->flush();
     }
 

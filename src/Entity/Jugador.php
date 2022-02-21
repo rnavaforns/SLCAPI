@@ -12,7 +12,6 @@ class Jugador
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
      * @ORM\Column(type="integer", unique=true)
      */
     private $id;
@@ -65,7 +64,7 @@ class Jugador
     public function setId(int $id): self
     {
         $this->id = $id;
-        
+
         return $this;
     }
 

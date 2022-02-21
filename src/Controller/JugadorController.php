@@ -44,4 +44,85 @@ class JugadorController extends AbstractController
 
         return new JsonResponse(['status' => 'Jugador created!'], Response::HTTP_CREATED);
     }
+
+	/**
+	 * @Route("/jugador/{id}", name="get_one_jugador", methods={"GET"})
+	 */
+	public function get($id): JsonResponse
+	{
+		$jugador = $this->jugadorRepository->findOneBy(['id' => $id]);
+
+		$data = $this->getData($jugador);
+
+		return new JsonResponse($data, Response::HTTP_OK);
+	}
+
+	/**
+	 * @Route("/jugadors", name="get_all_jugadors", methods={"GET"})
+	 */
+	public function getAll(): JsonResponse
+	{
+		$jugadors = $this->jugadorRepository->findAll();
+		$jugador_map = array();
+
+		foreach ($jugadors as $jugador) {
+			$jugador_map[$jugador->getId()] = $this->getData($jugador);
+		}
+
+		return new JsonResponse($jugador_map, Response::HTTP_OK);
+	}
+
+	/**
+	 * @Route("/jugador/{id}{accio}", name="update_jugador", methods={"PUT"})
+	 */
+	public function update($id, $accio, Request $request): JsonResponse
+	{
+		$jugador = $this->jugadorRepository->findOneBy(['id' => $id]);
+		$data_jugador = $this->getData($jugador);
+
+		switch($accio) {
+			case 'gols':
+				$jugador->setGols($data_jugador['gols']++);
+				break;
+			case 'assist':
+				$jugador->setAssist($data_jugador['assist']++);
+				break;
+			case 'xuts_porta':
+				$jugador->setXutsPorta($data_jugador['xuts_porta']++);
+				break;
+			case 'xuts_fora':
+				$jugador->setXutsFora($data_jugador['xuts_fora']++);
+				break;
+			case 'perdues':
+				$jugador->setPerdues($data_jugador['perdues']);
+				break;
+			case 'recuperacions':
+				$jugador->setRecuperacions($data_jugador['recuperacions']);
+				break;
+			case 'intercepcions':
+				$jugador->setIntercepcions($data_jugador['intercepcions']);
+				break;
+			default:
+				$jugador->setPartits($data_jugador['partits']++);
+				break;
+		}
+		$updatedJugador = $this->jugadorRepository->updateCustomer($jugador);
+
+		return new JsonResponse($updatedJugador->toArray(), Response::HTTP_OK);
+	}
+
+	protected function getData($jugador)
+	{
+		return $data[] = array(
+			'id'=>$jugador->getId(),
+			'gols'=>$jugador->getGols(),
+			'assist'=>$jugador->getAssist(),
+			'xuts_porta'=>$jugador->getXutsPorta(),
+			'xuts_fora'=>$jugador->getXutsFora(),
+			'perdues'=>$jugador->getPerdues(),
+			'recuperacions'=>$jugador->getRecuperacions(),
+			'intercepcions'=>$jugador->getIntercepcions(),
+			'partits'=>$jugador->getPartits()
+		);
+	}
 }
