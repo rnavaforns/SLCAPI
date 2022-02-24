@@ -54,25 +54,25 @@ class PartitController extends AbstractController
 
 		switch($accio) {
 			case 'gols':
-				$partit->setGols($data_partit['gols'] + 1);
+				$partit->setGols(++$data_partit['gols']);
 				break;
 			case 'assist':
-				$partit->setAssist($data_partit['assist'] + 1);
+				$partit->setAssist(++$data_partit['assist']);
 				break;
 			case 'xuts_porta':
-				$partit->setXutsPorta($data_partit['xuts_porta'] + 1);
+				$partit->setXutsPorta(++$data_partit['xuts_porta']);
 				break;
 			case 'xuts_fora':
-				$partit->setXutsFora($data_partit['xuts_fora'] + 1);
+				$partit->setXutsFora(++$data_partit['xuts_fora']);
 				break;
 			case 'perdues':
-				$partit->setPerdues($data_partit['perdues'] + 1);
+				$partit->setPerdues(++$data_partit['perdues']);
 				break;
 			case 'recuperacions':
-				$partit->setRecuperacions($data_partit['recuperacions'] + 1);
+				$partit->setRecuperacions(++$data_partit['recuperacions']);
 				break;
 			case 'intercepcions':
-				$partit->setIntercepcions($data_partit['intercepcions'] + 1);
+				$partit->setIntercepcions(++$data_partit['intercepcions']);
 				break;
 			default:
 				break;
@@ -84,7 +84,7 @@ class PartitController extends AbstractController
 
     protected function getData($partit)
 	{
-		return $data = array(
+		return array(
 			'id'=>$partit->getId(),
 			'gols'=>$partit->getGols(),
 			'assist'=>$partit->getAssist(),

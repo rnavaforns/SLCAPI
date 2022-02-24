@@ -28,11 +28,12 @@ class PartitRepository extends ServiceEntityRepository
         $this->manager = $manager;
     }
 
-    public function savePartit($gols, $assist, $xuts_porta, $xuts_fora, $perdues, $recuperacions, $intercepcions)
+    public function savePartit($id, $gols, $assist, $xuts_porta, $xuts_fora, $perdues, $recuperacions, $intercepcions)
     {
         $newPartit = new Partit();
 
         $newPartit
+            ->setId($id)
             ->setGols($gols)
             ->setAssist($assist)
             ->setXutsPorta($xuts_porta)

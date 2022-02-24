@@ -82,28 +82,28 @@ class JugadorController extends AbstractController
 
 		switch($accio) {
 			case 'gols':
-				$jugador->setGols($data_jugador['gols'] + 1);
+				$jugador->setGols(++$data_jugador['gols']);
 				break;
 			case 'assist':
-				$jugador->setAssist($data_jugador['assist'] + 1);
+				$jugador->setAssist(++$data_jugador['assist']);
 				break;
 			case 'xuts_porta':
-				$jugador->setXutsPorta($data_jugador['xuts_porta'] + 1);
+				$jugador->setXutsPorta(++$data_jugador['xuts_porta']);
 				break;
 			case 'xuts_fora':
-				$jugador->setXutsFora($data_jugador['xuts_fora'] + 1);
+				$jugador->setXutsFora(++$data_jugador['xuts_fora']);
 				break;
 			case 'perdues':
-				$jugador->setPerdues($data_jugador['perdues'] + 1);
+				$jugador->setPerdues(++$data_jugador['perdues']);
 				break;
 			case 'recuperacions':
-				$jugador->setRecuperacions($data_jugador['recuperacions'] + 1);
+				$jugador->setRecuperacions(++$data_jugador['recuperacions']);
 				break;
 			case 'intercepcions':
-				$jugador->setIntercepcions($data_jugador['intercepcions'] + 1);
+				$jugador->setIntercepcions(++$data_jugador['intercepcions']);
 				break;
 			default:
-				$jugador->setPartits($data_jugador['partits']++);
+				$jugador->setPartits(++$data_jugador['partits']++);
 				break;
 		}
 		$updatedJugador = $this->jugadorRepository->updateJugador($jugador);
