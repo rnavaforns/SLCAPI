@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Repository\PartitRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class PartitController 
+class PartitController extends AbstractController
 {
 	private $partitRepository;
 
@@ -44,57 +45,54 @@ class PartitController
     }
 
     /**
-	 * @Route("/partit/{id}{accio}", name="update_partit", methods={"PUT"})
+	 * @Route("/updatepartit/{id}&{accio}", name="update_partit", methods={"PUT"})
 	 */
-	public function update($id, $accio, Request $request): JsonResponse
+	public function update($id, $accio): JsonResponse
 	{
-		$jugador = $this->jugadorRepository->findOneBy(['id' => $id]);
-        $partit = $this->partitRepository->findOneBy([1]);
-		$data_jugador = $this->getData($jugador);
+        $partit = $this->partitRepository->findOneBy(['id' => $id]);
+		$data_partit = $this->getData($partit);
 
 		switch($accio) {
 			case 'gols':
-				$jugador->setGols($data_jugador['gols']++);
+				$partit->setGols($data_partit['gols'] + 1);
 				break;
 			case 'assist':
-				$jugador->setAssist($data_jugador['assist']++);
+				$partit->setAssist($data_partit['assist'] + 1);
 				break;
 			case 'xuts_porta':
-				$jugador->setXutsPorta($data_jugador['xuts_porta']++);
+				$partit->setXutsPorta($data_partit['xuts_porta'] + 1);
 				break;
 			case 'xuts_fora':
-				$jugador->setXutsFora($data_jugador['xuts_fora']++);
+				$partit->setXutsFora($data_partit['xuts_fora'] + 1);
 				break;
 			case 'perdues':
-				$jugador->setPerdues($data_jugador['perdues']);
+				$partit->setPerdues($data_partit['perdues'] + 1);
 				break;
 			case 'recuperacions':
-				$jugador->setRecuperacions($data_jugador['recuperacions']);
+				$partit->setRecuperacions($data_partit['recuperacions'] + 1);
 				break;
 			case 'intercepcions':
-				$jugador->setIntercepcions($data_jugador['intercepcions']);
+				$partit->setIntercepcions($data_partit['intercepcions'] + 1);
 				break;
 			default:
-				$jugador->setPartits($data_jugador['partits']++);
 				break;
 		}
-		$updatedPartit = $this->partitRepository->updateCustomer($partit);
+		$updatedPartit = $this->partitRepository->updatePartit($partit);
 
 		return new JsonResponse($updatedPartit->toArray(), Response::HTTP_OK);
 	}
 
-    protected function getData($jugador)
+    protected function getData($partit)
 	{
-		return $data[] = array(
-			'id'=>$jugador->getId(),
-			'gols'=>$jugador->getGols(),
-			'assist'=>$jugador->getAssist(),
-			'xuts_porta'=>$jugador->getXutsPorta(),
-			'xuts_fora'=>$jugador->getXutsFora(),
-			'perdues'=>$jugador->getPerdues(),
-			'recuperacions'=>$jugador->getRecuperacions(),
-			'intercepcions'=>$jugador->getIntercepcions(),
-			'partits'=>$jugador->getPartits()
+		return $data = array(
+			'id'=>$partit->getId(),
+			'gols'=>$partit->getGols(),
+			'assist'=>$partit->getAssist(),
+			'xuts_porta'=>$partit->getXutsPorta(),
+			'xuts_fora'=>$partit->getXutsFora(),
+			'perdues'=>$partit->getPerdues(),
+			'recuperacions'=>$partit->getRecuperacions(),
+			'intercepcions'=>$partit->getIntercepcions(),
 		);
 	}
 

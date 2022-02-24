@@ -24,7 +24,7 @@ class PartitRepository extends ServiceEntityRepository
         EntityManagerInterface $manager
     )
     {
-        parent::__construct($registry, Jugador::class);
+        parent::__construct($registry, Partit::class);
         $this->manager = $manager;
     }
 
@@ -44,6 +44,15 @@ class PartitRepository extends ServiceEntityRepository
         $this->manager->persist($newPartit);
         $this->manager->flush();
     }
+
+    public function updatePartit(Partit $partit): Partit
+    {
+        $this->manager->persist($partit);
+        $this->manager->flush();
+
+        return $partit;
+    }
+
     
     // /**
     //  * @return Partit[] Returns an array of Partit objects

@@ -46,6 +46,14 @@ class JugadorRepository extends ServiceEntityRepository
         $this->manager->flush();
     }
 
+    public function updateJugador(Jugador $jugador): Jugador
+    {
+        $this->manager->persist($jugador);
+        $this->manager->flush();
+
+        return $jugador;
+    }
+
     // /**
     //  * @return Jugador[] Returns an array of Jugador objects
     //  */
